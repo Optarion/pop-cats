@@ -1,5 +1,18 @@
 const { GraphQLServer } = require('graphql-yoga')
 
+const typeDefs = `
+  type Query {
+    cats: [Cat!]!
+  }
+
+  type Cat {
+    id: ID!
+    name: String!
+    age: Int!
+    price: String!
+  }
+`
+
 const cats = [
   { id: 1, name: 'Gayleen', age: 2, price: '$919.88' },
   { id: 2, name: 'Theodosia', age: 9, price: '$867.53' },
@@ -15,9 +28,5 @@ const resolvers = {
   }
 }
 
-const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
-  resolvers
-})
-
+const server = new GraphQLServer({ typeDefs, resolvers })
 server.start(() => console.log('Server is running on localhost:4000'))
