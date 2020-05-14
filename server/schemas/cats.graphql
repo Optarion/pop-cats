@@ -2,8 +2,20 @@ type Query {
 	cats: [Cat!]!
 }
 
+type Mutation {
+	createCat(cat: CatInput!): String!
+	updateCat(id: ID! cat: CatInput!): String!
+	deleteCat(id: ID!): String!
+}
+
 type Cat {
 	id: ID!
+	name: String!
+	age: Int!
+	price: String!
+}
+
+input CatInput {
 	name: String!
 	age: Int!
 	price: String!

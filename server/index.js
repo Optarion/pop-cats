@@ -6,6 +6,11 @@ postGres.init()
 const resolvers = {
   Query: {
     cats: () => postGres.get()
+  },
+  Mutation: {
+    createCat: (parent, args) => postGres.create(args),
+    updateCat: (parent, args) => postGres.update(args),
+    deleteCat: (parent, args) => postGres.delete(args)
   }
 }
 
