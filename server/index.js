@@ -1,5 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
+const express = require('express')
 const postGres = require('./postgres-model')
+const path = require('path')
 
 postGres.init()
 
@@ -19,4 +21,14 @@ const server = new GraphQLServer({
   resolvers
 })
 
-server.start(() => console.log('Server is running on localhost:4000'))
+const serverOptions = { playground: '/graphql' }
+
+server.start(serverOptions, () => console.log('Server is running on localhost:4000'))
+
+server.express.use(express.static(path.join(__dirname, '../build')))
+
+server.express.get('*', (req, res, next) => {
+  if (req.url === serverOptions.endpoint) return next()
+
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})

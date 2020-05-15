@@ -1,11 +1,12 @@
 const { Client } = require('pg')
+const config = require('./config')
 
 let client
 
 module.exports = {
   init: () => {
     client = new Client({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: config.postGres.uri,
       ssl: {
         rejectUnauthorized: false
       }
